@@ -1,13 +1,23 @@
 import React, { useContext, useState, useEffect } from "react";
 import Navbar from "./Navbar";
 import DataContext from "../DataContext";
-import { Link } from "react-router-dom";
+import { Link,useNavigate } from "react-router-dom";
 import Advertisenment from "./Advertisenment";
 import "./Home.css";
 import Footer from "./Footer";
 
 const Home = () => {
   const data = useContext(DataContext);
+
+  const [visible, setVisible] = useState(5);
+  const [visibleAD, setVisibleAD] = useState(3);
+  const [loader, setLoader] = useState(true);
+
+
+  const [searchText,setSearchText] = useState("");
+  const navigate= useNavigate();
+
+
 
   const bollyMovies = data.filter(item => item.category === "Bollywood");
   // const adddata = data.filter(item => item.category === "Advertisement");
@@ -31,9 +41,6 @@ const Home = () => {
   const card2 = getRandomImage();
   const card3 = getRandomImage();
 
-  // State to control visible items
-  const [visible, setVisible] = useState(3);
-  const [loader, setLoader] = useState(true);
   
   useEffect(() => {
     const lazyloader = () => {
@@ -44,14 +51,11 @@ const Home = () => {
     lazyloader();
   }, []);
 
-    // Advertisement data
-   
-  // Function to load more items
-  const handleLoad = () => {
-    setVisible(prevVisible => prevVisible + 5); // Load 5 more items at a time
-    setVisibleAds((prev) => prev + 5); // Increase the number of visible ads
 
-  };
+  const handleSearch=()=>{
+    navigate(`search/${searchText}`);
+  }
+ 
 
   return (
     <>
@@ -60,7 +64,12 @@ const Home = () => {
       ) : (
         <>
       <Navbar />
-{
+
+        <div className="search-container">
+          <input type="text" value={searchText} onChange={(e)=>setSearchText(e.target.value)} className="search-input"/>
+          <button onClick={handleSearch} className="search-button">Search</button>
+        </div>
+
       <div className="main-container">
         <Link to={`/detail/${selectedArray}`}>
           <div className="header-container">
@@ -90,7 +99,7 @@ const Home = () => {
             </div>
           </div>
         </Link>
-      </div> }
+      </div> 
 
       <div className="second-container">
         <h1>The Latest</h1>
@@ -140,9 +149,6 @@ const Home = () => {
               </div>
             ))}
           </div>
-          {visible < bollyMovies.length && (
-            <button onClick={handleLoad}>Load More</button>
-          )}
         </div>
 
         <div className="RightSide">
@@ -161,13 +167,10 @@ const Home = () => {
               </Link>
             </div>
           ))}
-
               {/* Advertisement Section */}
-              <Advertisenment visible={visible}/>
-
+              <Advertisenment visibleAD={visibleAD}/>
         </div>
       </div>
-
       <Footer />
     </>
         )}

@@ -8,6 +8,7 @@ import Bollywood from './Components/Bollywood';
 import Technology from './Components/Technology';
 import CategoryDetail from './Components/CategoryDetail';
 import Footer from './Components/Footer';
+import SearchResults from './Components/SearchResults';
 
 const RoutePath = () => {
   return (
@@ -21,6 +22,7 @@ const RoutePath = () => {
       <Route path="/bollywood" element={<Bollywood />} />
       <Route path="/footer" element={<Footer />} />
       <Route path="/detail/:id" element={<CategoryDetail/>}></Route>
+      <Route path="/search/:searchText" element={<SearchResults/>}></Route>
     </Routes>
   </Router>
   )

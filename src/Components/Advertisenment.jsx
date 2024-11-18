@@ -7,7 +7,7 @@ const AdItem = ({ description, imageUrl }) => (
   </div>
 );
 
-const Advertisenment = ({ visible }) => {
+const Advertisenment = ({visibleAD}) => {
   // const [visible, setVisible] = useState(3); // Controls visible ads
 
   const addddata = [
@@ -66,7 +66,7 @@ const Advertisenment = ({ visible }) => {
   return (
     <div className="Advertisement">
       <h1>Advertisements</h1>
-      {addddata.slice(0, visible).map((ad) => (
+      {addddata.slice(0, visibleAD).map((ad) => (
         <AdItem
           key={ad.id}
           imageUrl={ad.imageUrl}
